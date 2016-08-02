@@ -1,18 +1,33 @@
 import gulp from 'gulp';
-import less from 'gulp-less';
 import jshint from 'gulp-jshint';
+import babel from 'gulp-babel';
+import webserver from 'gulp-webserver';
 
-gulp.task('default', () => console.log('Default task called'));
-
-gulp.task('lint-client', () => {
-    gulp.src('./client/**/*.js')
+gulp.task('lint', () => {
+    gulp.src('./app/**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
 });
 
-gulp.task('watch', () => {
-    gulp.watch('client/**/*.js', ['default']);
-    gulp.watch('test/client/**/*.js', ['default']);
+gulp.task('js', () => {
+    return gulp.src('app/src/*.js')
+        .pipe(babel())
+        .pipe(gulp.dest('build'));
 });
 
-gulp.task('build', ['uglify', 'minify']);
+gulp.task('styles', () => {
+    return gulp.src(['app/**/*.html', 'app/**/*.css'])
+        .pipe(gulp.dest('build'));
+});
+
+gulp.task('serve', ['build'], () => {
+    gulp.src('build')
+        .pipe(webserver({open: true}));
+});
+
+gulp.task('watch', () => {
+    gulp.watch('app/**/*.js', ['build']);
+});
+
+gulp.task('build', ['js', 'styles']);
+gulp.task('default', ['lint', 'build', 'serve']);
