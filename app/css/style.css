@@ -3,9 +3,14 @@
     margin: 0;
 }
 
+html, body {
+    width:100%;
+    height:100%;
+}
+
 canvas {
-    background: rgba(45, 30, 255, 0.69);
+    background: rgba(255, 234, 240, 0.62);
     display: block;
-    margin: 50px auto;
-    border: solid;
+    margin: 0 auto;
+    border: none;
 }
