@@ -23,4 +23,9 @@ Minify / uglify code
 
 SASS
 
-Sometimes the browser needs a refresh on start to display...dunno why
+Sometimes the browser needs a refresh on start to display...dunno why - maybe
+caused by the watcher, remove this from the gulp task
+
+Change canvas colour
+
+Clear animation when offscreen - does canvas do this automatically?

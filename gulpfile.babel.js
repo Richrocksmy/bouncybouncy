@@ -14,14 +14,19 @@ gulp.task('lint', () => {
 });
 
 gulp.task('js', () => {
-    gulp.src('app/src/*.js')
+    gulp.src('app/src/**/*.js')
         .pipe(babel())
         .pipe(gulp.dest('build'));
 });
 
-gulp.task('styles', () => {
-    gulp.src(['app/**/*.html', 'app/css/*.css'])
-        .pipe(gulp.dest('build/css'));
+gulp.task('css', () => {
+    gulp.src(['app/**/*.css'])
+        .pipe(gulp.dest('build'));
+});
+
+gulp.task('html', () => {
+    gulp.src(['app/**/*.html'])
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('serve', ['build'], () => {
@@ -36,8 +41,9 @@ gulp.task('serve', ['build'], () => {
 
 gulp.task('watch', () => {
     gulp.watch('app/**/*.js', ['js']);
-    gulp.watch(['app/**/*.html', 'app/css/*.css'], ['styles']);
+    gulp.watch(['app/**/*.html'], ['html']);
+    gulp.watch(['app/css/*.css'], ['css']);
 });
 
-gulp.task('build', ['js', 'styles']);
-gulp.task('default', ['lint', 'build', 'watch', 'serve']);
+gulp.task('build', ['js', 'html', 'css']);
+gulp.task('default', ['lint', 'build', 'serve', 'watch']);

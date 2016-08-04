@@ -8,7 +8,6 @@ class Animator {
         this[_canvas] = document.getElementById('canvas');
         this[_context] = this[_canvas].getContext('2d');
         this[_sprites] = [];
-        //this._testPopulateSprites();
 
         this.resizeCanvas();
     }
@@ -19,28 +18,36 @@ class Animator {
     }
 
     animate() {
-        this[_context].beginPath();
-
+        this[_context].clearRect(0, 0, this[_canvas].width, this[_canvas].height);
         this[_sprites].forEach((sprite) => {
-            sprite.draw(this[_context]);
-            // sprite.updatePosition();
+            this._draw(sprite);
+            sprite.updatePosition();
         });
-
-        this[_context].closePath();
 
         requestAnimationFrame(() => this.animate());
     }
 
-    addSprite(event) {
-        this[_sprites].push(new Ball(event.clientX, event.clientY));
-        // this[_sprites].push(new Ball(50, 50));
+    _draw(sprite) {
+        // Clear the canvas before we repaint
+
+        this[_context].beginPath();
+        sprite.draw(this[_context]);
+        this[_context].closePath();
     }
 
-    _testPopulateSprites() {
-        this[_sprites].push(new Ball(50, 50));
-        this[_sprites].push(new Ball(50, 40));
-        this[_sprites].push(new Ball(50, 30));
-        this[_sprites].push(new Ball(50, 20));
-        this[_sprites].push(new Ball(50, 10));
+    addSprite(event) {
+        this[_sprites].push(new Ball(
+            {
+                x: event.clientX,
+                y: event.clientY
+            },
+            {
+                dx: 1,
+                dy: -2
+            }));
+    }
+
+    _getVelocity() {
+
     }
 }
