@@ -11,7 +11,7 @@ class Ball {
     constructor(startPosition, velocity) {
         this[_position] = startPosition;
         this[_velocity] = velocity;
-        this[_counter] = startPosition.x;
+        this[_counter] = 0;
     }
 
     draw(context) {
@@ -20,13 +20,27 @@ class Ball {
         context.fill();
     }
 
+    // updatePosition() {
+    //     this[_counter] += 0.01;
+    //     this[_position].x += this[_velocity].dx;
+    //     this[_position].y += 10 * Math.sin(this[_counter]);
+    // }
+
     updatePosition() {
-        this[_counter] += 0.1;
+        this[_counter] += 0.02;
         this[_position].x += this[_velocity].dx;
-        this[_position].y += 10 * Math.sin(this[_counter]);
-        // this[_position].y = 10 * Math.sin(this[_position].x);
-        // this[_position].x = this._calculateNextX();
-        // this[_position].y = this._calculateNextY();
+
+        var hasBounced = 1;
+        if(this[_position].y > window.innerHeight) {
+            hasBounced = -1;
+            this[_counter] *= -1;
+
+        }
+
+        this[_position].y += (Math.pow(this[_counter], 2) - 4) * hasBounced;
+
+        console.log(this[_position]);
+        console.log(window.innerHeight);
     }
 
     // _calculateNextX() {
