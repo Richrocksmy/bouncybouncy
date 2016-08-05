@@ -9,9 +9,9 @@ const _physics = Symbol('physics');
 
 class Ball {
 
-    constructor(startPosition, physics) {
+    constructor(startPosition) {
         this[_position] = startPosition;
-        this[_physics] = physics;
+        this[_physics] = this._generatePhysics();
         this[_counter] = 0;
     }
 
@@ -29,7 +29,7 @@ class Ball {
     }
 
     _updateX() {
-        this[_position].x += this[_physics].dx;
+        this[_position].x += (this[_physics].dx * this[_physics].direction);
     }
 
     _updateY() {
@@ -50,6 +50,32 @@ class Ball {
         }
 
         // Ball adheres to curve defined by y = x^2 + n
-        this[_position].y += (Math.pow(this[_counter], 2) - this[_physics].graphShift);
+        this[_position].y += Math.pow(this[_counter], 2) - this[_physics].startPointOnCurve;
+    }
+
+    _generatePhysics() {
+        return {
+            arcHeight: this._generateRandomNumber(0.02, 0.10),
+            bounceHeight: this._generateRandomNumber(0.04, 0.10),
+            bounceFriction: this._generateRandomNumber(0.04, 0.12),
+            startPointOnCurve: this._generateRandomNumber(1, 4),
+            dx: this._generateRandomNumber(1, 6),
+            direction: this._generateDirection()
+        }
+    }
+
+    _generateDirection() {
+        var random = this._generateRandomNumber(0, 1);
+        var direction = 1;
+
+        if(random <= 0.5) {
+            direction = -1;
+        }
+
+        return direction;
+    }
+
+    _generateRandomNumber(lowerBound, upperBound) {
+        return (Math.random() * upperBound) + lowerBound;
     }
 }
