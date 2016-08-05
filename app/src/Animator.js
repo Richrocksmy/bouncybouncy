@@ -21,10 +21,17 @@ class Animator {
         // Clear the canvas before we repaint
         this[_context].clearRect(0, 0, this[_canvas].width, this[_canvas].height);
         this[_sprites].forEach((sprite) => {
-            this._draw(sprite);
-            sprite.updatePosition();
+            if(sprite.isRenderable()) {
+                this._draw(sprite);
+                sprite.updatePosition();
+            } else {
+                // If we can no longer draw this element, remove it
+                // from the render list to increase performance
+                this[_sprites].splice(this[_sprites].indexOf(sprite), 1)
+            }
         });
 
+        console.log(this[_sprites].length);
         requestAnimationFrame(() => this.animate());
     }
 
