@@ -9,15 +9,16 @@ class Animator {
         this[_context] = this[_canvas].getContext('2d');
         this[_sprites] = [];
 
-        this.resizeCanvas();
+        this._resizeCanvas();
     }
 
-    resizeCanvas() {
+    _resizeCanvas() {
         this[_canvas].width = window.innerWidth;
         this[_canvas].height = window.innerHeight;
     }
 
     animate() {
+        // Clear the canvas before we repaint
         this[_context].clearRect(0, 0, this[_canvas].width, this[_canvas].height);
         this[_sprites].forEach((sprite) => {
             this._draw(sprite);
@@ -28,8 +29,6 @@ class Animator {
     }
 
     _draw(sprite) {
-        // Clear the canvas before we repaint
-
         this[_context].beginPath();
         sprite.draw(this[_context]);
         this[_context].closePath();
@@ -40,17 +39,16 @@ class Animator {
             {
                 x: event.clientX,
                 y: event.clientY
-            },
-            {
-                arcHeight: 0.02,
-                bounceHeight: 0.04,
-                limitOfBounce: 4.2,
-                graphShift: 4,
-                dx: 1
-            }));
+            }, this._generatePhysics()));
     }
 
-    _getVelocity() {
-
+    _generatePhysics() {
+        return {
+            arcHeight: 0.02,
+            bounceHeight: 0.04,
+            bounceFriction: 0.04,
+            graphShift: 4,
+            dx: 1
+        }
     }
 }

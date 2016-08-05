@@ -1,6 +1,7 @@
 const COLOR = '#0095DD';
 const RADIUS = 10;
 const DRAW_START_ANGLE = 0;
+const BOUNCE_STOP_FACTOR = 0.6;
 
 const _position = Symbol('position');
 const _counter = Symbol('counter');
@@ -21,30 +22,34 @@ class Ball {
     }
 
     updatePosition() {
-        if(this[_counter] >= this[_physics].limitOfBounce) {
-            // Reached limite of bounces - stop the ball
-            this[_position].y = window.innerHeight;
-        } else {
-            this._calculateX();
-            this._calculateY();
+        if(this[_physics].dx >= BOUNCE_STOP_FACTOR) {
+            this._updateX();
+            this._updateY();
         }
     }
 
-    _calculateX() {
+    _updateX() {
         this[_position].x += this[_physics].dx;
     }
 
-    _calculateY() {
-        // Ball adheres to curve defined by y = x^2 + n
+    _updateY() {
         this[_counter] += this[_physics].arcHeight;
 
         if(this[_position].y > window.innerHeight) {
             // Ball has hit bottom of window so
             // make it bounce
             this[_counter] = 0;
+
+            // Reduce the arc height by the bounce height
+            // --> y axis values are inverted!
             this[_physics].arcHeight += this[_physics].bounceHeight;
+
+            // Reduce the movement in x axis because of friction
+            // incurred from bounce
+            this[_physics].dx -= this[_physics].bounceFriction;
         }
 
+        // Ball adheres to curve defined by y = x^2 + n
         this[_position].y += (Math.pow(this[_counter], 2) - this[_physics].graphShift);
     }
 }
