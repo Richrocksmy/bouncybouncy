@@ -17,7 +17,7 @@ and ES6 classes not being detected as used causing a build failure.
 TODO
 
 Auto resize canvas on window resize
-Weakmap or symbols for private members?
+Weakmap or symbols for private members? can' do this[_symbol].prop
 
 Minify / uglify code
 

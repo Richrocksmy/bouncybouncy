@@ -42,8 +42,11 @@ class Animator {
                 y: event.clientY
             },
             {
-                dx: 1,
-                dy: -2
+                arcHeight: 0.02,
+                bounceHeight: 0.04,
+                limitOfBounce: 4.2,
+                graphShift: 4,
+                dx: 1
             }));
     }
 
