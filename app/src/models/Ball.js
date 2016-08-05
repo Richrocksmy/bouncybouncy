@@ -25,8 +25,6 @@ class Ball {
         if(this[_physics].dx >= BOUNCE_STOP_FACTOR) {
             this._updateX();
             this._updateY();
-        } else {
-            // this[_position].y += RADIUS;
         }
     }
 
@@ -37,7 +35,7 @@ class Ball {
     _updateY() {
         this[_counter] += this[_physics].arcHeight;
 
-        if(this[_position].y > window.innerHeight) {
+        if(this[_position].y > (window.innerHeight - (RADIUS * 2))) {
             // Ball has hit bottom of window so
             // make it bounce
             this[_counter] = 0;
