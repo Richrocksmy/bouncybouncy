@@ -25,6 +25,8 @@ class Ball {
         if(this[_physics].dx >= BOUNCE_STOP_FACTOR) {
             this._updateX();
             this._updateY();
+        } else {
+            // this[_position].y += RADIUS;
         }
     }
 

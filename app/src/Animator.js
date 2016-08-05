@@ -35,20 +35,30 @@ class Animator {
     }
 
     addSprite(event) {
-        this[_sprites].push(new Ball(
-            {
-                x: event.clientX,
-                y: event.clientY
-            }, this._generatePhysics()));
+        this[_sprites].push(new Ball({x: event.clientX, y: event.clientY}, this._generatePhysics()));
     }
 
     _generatePhysics() {
         return {
-            arcHeight: 0.02,
-            bounceHeight: 0.04,
-            bounceFriction: 0.04,
-            graphShift: 4,
-            dx: 1
+            arcHeight: this._generateRandomNumberWithinBounds(0.02, 0.10),
+            bounceHeight: this._generateRandomNumberWithinBounds(0.04, 0.12),
+            bounceFriction: this._generateRandomNumberWithinBounds(0.04, 0.12),
+            graphShift: this._generateRandomNumberWithinBounds(1, 4),
+            dx: this._generateRandomNumberWithinBounds(0.5, 4)
         }
     }
+
+    _generateRandomNumberWithinBounds(lowerBound, upperBound) {
+        return (Math.random() * upperBound) + lowerBound;
+    }
+
+    // _generatePhysics() {
+    //     return {
+    //         arcHeight: 0.02,
+    //         bounceHeight: 0.04,
+    //         bounceFriction: 0.04,
+    //         graphShift: 4,
+    //         dx: 1
+    //     }
+    // }
 }
