@@ -9,10 +9,10 @@ class Animator {
         this[_context] = this[_canvas].getContext('2d');
         this[_sprites] = [];
 
-        this._resizeCanvas();
+        this.resizeCanvas();
     }
 
-    _resizeCanvas() {
+    resizeCanvas() {
         this[_canvas].width = window.innerWidth;
         this[_canvas].height = window.innerHeight;
     }
@@ -21,17 +21,17 @@ class Animator {
         // Clear the canvas before we repaint
         this[_context].clearRect(0, 0, this[_canvas].width, this[_canvas].height);
         this[_sprites].forEach((sprite) => {
-            if(sprite.isRenderable()) {
+         //   if(sprite.isRenderable()) {
                 this._draw(sprite);
                 sprite.updatePosition();
-            } else {
-                // If we can no longer draw this element, remove it
-                // from the render list to increase performance
-                this[_sprites].splice(this[_sprites].indexOf(sprite), 1)
-            }
+            // } else {
+            //     // If we can no longer draw this element, remove it
+            //     // from the render list to increase performance
+            //     this[_sprites].splice(this[_sprites].indexOf(sprite), 1)
+            // }
         });
 
-        console.log(this[_sprites].length);
+        // console.log(this[_sprites].length);
         requestAnimationFrame(() => this.animate());
     }
 

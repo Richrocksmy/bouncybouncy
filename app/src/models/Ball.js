@@ -1,45 +1,38 @@
 const DRAW_START_ANGLE = 0;
-
-// This controls how quickly the ball will stop bouncing
-// Higher values prevent oscillation around bottom of window
-// but look less realistic
-const BOUNCE_STOP_FACTOR = 0.9;
+const NUMBER_OF_ALLOWED_BOUNCES = 13;
 
 const _position = Symbol('position');
 const _counter = Symbol('counter');
 const _physics = Symbol('physics');
-const _color = Symbol('color');
-const _radius = Symbol('radius');
+const _style = Symbol('style');
+const _numberOfBounces = Symbol('numberOfBounces');
 
 class Ball {
 
     constructor(startPosition) {
         this[_position] = startPosition;
         this[_physics] = this._generatePhysics();
-        this[_color] = this._generateRandomColor();
-        this[_radius] = this._generateRandomNumber(10, 40);
+        this[_style] = {
+            color: this._generateRandomColor(),
+            radius: this._generateRandomNumber(10, 40)
+        };
+
         this[_counter] = 0;
+        this[_numberOfBounces] = 0;
+
     }
 
     draw(context) {
-        context.arc(this[_position].x, this[_position].y, this[_radius], DRAW_START_ANGLE, Math.PI*2);
-        context.fillStyle = this[_color];
+        context.arc(this[_position].x, this[_position].y, this[_style].radius, DRAW_START_ANGLE, Math.PI*2);
+        context.fillStyle = this[_style].color;
         context.fill();
     }
 
     updatePosition() {
-        if(this[_physics].dx >= BOUNCE_STOP_FACTOR) {
-            this._updateX();
+        if(this[_numberOfBounces] < NUMBER_OF_ALLOWED_BOUNCES) {
             this._updateY();
+            this._updateX();
         }
-    }
-
-    isRenderable() {
-        // if(this.offsetLeft > window.innerWidth) {
-        //     return false;
-        // }
-
-        return true;
     }
 
     _updateX() {
@@ -49,10 +42,11 @@ class Ball {
     _updateY() {
         this[_counter] += this[_physics].arcHeight;
 
-        if(this[_position].y > (window.innerHeight - 20)) {
+        if(this[_position].y > (window.innerHeight - this[_style].radius)) {
             // Ball has hit bottom of window so
             // make it bounce
             this[_counter] = 0;
+            this[_numberOfBounces]++;
 
             // Reduce the arc height by the bounce height
             // --> y axis values are inverted!
@@ -69,11 +63,11 @@ class Ball {
 
     _generatePhysics() {
         return {
-            arcHeight: this._generateRandomNumber(0.02, 0.02),
+            arcHeight: this._generateRandomNumber(0.02, 0.09),
             bounceHeight: this._generateRandomNumber(0.04, 0.04),
             bounceFriction: this._generateRandomNumber(0.01, 0.04),
             startPointOnCurve: this._generateRandomNumber(1, 4),
-            dx: this._generateRandomNumber(1, 6),
+            dx: this._generateRandomNumber(4, 6),
             direction: this._generateDirection()
         }
     }
@@ -93,6 +87,7 @@ class Ball {
     }
 
     _generateRandomColor() {
-        return COLORS[Math.round(this._generateRandomNumber(0, COLORS.length - 1))];
+        var colorIndex = Math.round(this._generateRandomNumber(0, COLORS.length - 1));
+        return COLORS[colorIndex];
     }
 }
