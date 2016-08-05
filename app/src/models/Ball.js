@@ -19,41 +19,18 @@ class Ball {
         context.fillStyle = COLOR;
         context.fill();
     }
-
-    // updatePosition() {
-    //     this[_counter] += 0.01;
-    //     this[_position].x += this[_velocity].dx;
-    //     this[_position].y += 10 * Math.sin(this[_counter]);
-    // }
-
+    
     updatePosition() {
         this[_counter] += 0.02;
         this[_position].x += this[_velocity].dx;
 
-        var hasBounced = 1;
         if(this[_position].y > window.innerHeight) {
-            hasBounced = -1;
-            this[_counter] *= -1;
-
+            // Ball has hit bottom of window so
+            // make it bounce
+            this[_counter] = 0;
         }
 
-        this[_position].y += (Math.pow(this[_counter], 2) - 4) * hasBounced;
+        this[_position].y += (Math.pow(this[_counter], 2) - 4);
 
-        console.log(this[_position]);
-        console.log(window.innerHeight);
     }
-
-    // _calculateNextX() {
-    //     return this[_position].x + this[_velocity].dx;
-    // }
-    //
-    // _calculateNextY() {
-    //     // Need to take into account if the ball
-    //     // has reached the bottom of the canvas
-    //     if(this[_position].y >= window.innerHeight) {
-    //         this[_velocity].dy *= -1;
-    //     }
-    //
-    //     return this[_position].y - this[_velocity].dy;
-    // }
 }
