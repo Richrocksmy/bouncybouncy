@@ -30,6 +30,5 @@ TODO
 
 - Change canvas colour - add background image?
 
-- Clear animation when offscreen - does canvas do this automatically? Still
-  needs to be removed from render list! Do this when it dies?
+- Sometimes balls randomly change color
 

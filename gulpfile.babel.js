@@ -27,6 +27,8 @@ gulp.task('css', () => {
 gulp.task('html', () => {
     gulp.src(['app/**/*.html'])
         .pipe(gulp.dest('build'));
+    gulp.src(['app/**/*.jpg'])
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('serve', ['build'], () => {

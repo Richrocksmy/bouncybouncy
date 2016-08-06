@@ -10,28 +10,38 @@ class Animator {
         this[_sprites] = [];
 
         this.resizeCanvas();
+        // this._loadBackground();
     }
 
     resizeCanvas() {
         this[_canvas].width = window.innerWidth;
         this[_canvas].height = window.innerHeight;
     }
+    //
+    // _loadBackground() {
+    //     var background = new Image();
+    //     background.src = 'res/background.jpg';
+    //
+    //     background.onload = function () {
+    //         this[_context].drawImage(background,0,0);
+    //     }​;
+    // }
 
     animate() {
+        var drawableSprites = [];
+
         // Clear the canvas before we repaint
         this[_context].clearRect(0, 0, this[_canvas].width, this[_canvas].height);
+
         this[_sprites].forEach((sprite) => {
-         //   if(sprite.isRenderable()) {
+           if(sprite.isDrawable) {
                 this._draw(sprite);
                 sprite.updatePosition();
-            // } else {
-            //     // If we can no longer draw this element, remove it
-            //     // from the render list to increase performance
-            //     this[_sprites].splice(this[_sprites].indexOf(sprite), 1)
-            // }
+                drawableSprites.push(sprite);
+            }
         });
 
-        // console.log(this[_sprites].length);
+        this[_sprites] = drawableSprites;
         requestAnimationFrame(() => this.animate());
     }
 

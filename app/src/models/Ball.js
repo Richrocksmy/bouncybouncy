@@ -17,7 +17,7 @@ class Ball {
         };
         this[_physics] = this._generatePhysics();
         this[_style] = {
-            color: this._generateRandomColor(),
+            color: this._generateColor(),
             radius: this._generateRandomNumber(10, 40)
         };
 
@@ -48,8 +48,12 @@ class Ball {
             this._updateX();
         } else if(this[_physics].dx > 0) {
             // The ball has stopped bouncing and will now roll to a stop
-            this[_physics].dx -= this[_physics].bounceFriction;
+            this[_physics].dx -= this[_physics].friction;
             this._updateX();
+        } else {
+            // The ball has stopped moving but we need to keep updating
+            // the y position in case the browser window is resized
+            this[_position].currentPosition.y = (window.innerHeight - this[_style].radius);
         }
     }
 
@@ -57,15 +61,13 @@ class Ball {
         this[_position].currentPosition.x += (this[_physics].dx * this[_physics].direction);
 
         // Check to see if the ball's new position
-        // is outside the visible window in x axis
-        if(this[_position].currentPosition.x < 0) {
-            console.log('out of range left');
-        } else {
-            var displacement = this[_position].currentPosition.x - this[_position].initialPosition.x;
-            var distanceToWindowEdge = window.innerWidth - this[_position].initialPosition.x;
-            if(displacement > distanceToWindowEdge) {
-                console.log('out of range right');
-            }
+        // is outside the visible window along x axis
+        var displacement = this[_position].currentPosition.x - this[_position].initialPosition.x;
+        var distanceToWindowEdge = window.innerWidth - this[_position].initialPosition.x;
+
+        if(((displacement - this[_style].radius) > distanceToWindowEdge) ||
+        ((this[_position].currentPosition.x + this[_style].radius) < 0)) {
+            this[_drawable] = false;
         }
     }
 
@@ -79,45 +81,45 @@ class Ball {
             this[_numberOfBounces]++;
 
             // Reduce the arc height by the bounce height
-            // --> y axis values are inverted so it's plus not minus!
+            // to simulate friction --> y axis values
+            // are inverted so it's plus not minus!
             this[_physics].arcHeight += this[_physics].bounceHeight;
 
-            // Reduce the movement in x axis because of friction
-            // incurred from bounce
-            this[_physics].dx -= this[_physics].bounceFriction;
+            // Reduce the movement in x axis to simulate
+            // friction
+            this[_physics].dx -= this[_physics].friction;
         }
 
-        // Ball adheres to curve defined by y = x^2 + n
+        // Ball adheres to curve defined by y = x^2 + n, once
+        // again, the y-axis is inverted so it's minus not plus
         this[_position].currentPosition.y += Math.pow(this[_counter], 2) - this[_physics].startPointOnCurve;
     }
 
     _generatePhysics() {
         return {
-            arcHeight: this._generateRandomNumber(0.02, 0.1),
-            bounceHeight: this._generateRandomNumber(0.04, 0.1),
-            bounceFriction: this._generateRandomNumber(0.01, 0.04),
+            arcHeight: this._generateRandomNumber(0.01, 0.04),
+            bounceHeight: this._generateRandomNumber(0.01, 0.05),
+            friction: this._generateRandomNumber(0.01, 0.04),
             startPointOnCurve: this._generateRandomNumber(1, 6),
-            dx: this._generateRandomNumber(4, 6),
+            dx: this._generateRandomNumber(2, 5),
             direction: this._generateDirection()
         }
     }
 
     _generateDirection() {
-        var random = this._generateRandomNumber(0, 1);
-
-        if(random <= 0.5) {
+        if(this._generateRandomNumber(0, 1) <= 0.5) {
             return -1;
         }
 
         return 1;
     }
 
-    _generateRandomNumber(lowerBound, upperBound) {
-        return (Math.random() * upperBound) + lowerBound;
-    }
-
-    _generateRandomColor() {
+    _generateColor() {
         var colorIndex = Math.round(this._generateRandomNumber(0, COLORS.length - 1));
         return COLORS[colorIndex];
+    }
+
+    _generateRandomNumber(lowerBound, upperBound) {
+        return (Math.random() * upperBound) + lowerBound;
     }
 }
