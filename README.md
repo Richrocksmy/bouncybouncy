@@ -16,9 +16,6 @@ and ES6 classes not being detected as used causing a build failure.
 
 TODO
 
-- Auto resize canvas on window resize - Need to repaint the ball's y coord
-  when the canvas gets resized.
-
 - Weakmap or symbols for private members? can' do this[_symbol].prop
 
 - Minify / uglify code

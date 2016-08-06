@@ -10,22 +10,12 @@ class Animator {
         this[_sprites] = [];
 
         this.resizeCanvas();
-        // this._loadBackground();
     }
 
     resizeCanvas() {
         this[_canvas].width = window.innerWidth;
         this[_canvas].height = window.innerHeight;
     }
-    //
-    // _loadBackground() {
-    //     var background = new Image();
-    //     background.src = 'res/background.jpg';
-    //
-    //     background.onload = function () {
-    //         this[_context].drawImage(background,0,0);
-    //     }​;
-    // }
 
     animate() {
         var drawableSprites = [];
