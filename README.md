@@ -25,7 +25,3 @@ TODO
 - Sometimes the browser needs a refresh on start to display...dunno why - maybe
   caused by the watcher, remove this from the gulp task
 
-- Change canvas colour - add background image?
-
-- Sometimes balls randomly change color
-

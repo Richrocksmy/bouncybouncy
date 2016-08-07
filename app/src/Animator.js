@@ -31,6 +31,8 @@ class Animator {
             }
         });
 
+        // Set the drawing array to only those sprites
+        // that we can draw (ie that are visible)
         this[_sprites] = drawableSprites;
         requestAnimationFrame(() => this.animate());
     }
