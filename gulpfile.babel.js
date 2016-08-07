@@ -7,8 +7,11 @@ import webserver from 'gulp-webserver';
 import clean from 'gulp-clean';
 import concat from 'gulp-concat';
 
+var buildPath = 'build';
+var appPath = 'app/**/';
+
 gulp.task('lint', () => {
-    return gulp.src('./app/**/*.js')
+    return gulp.src(appPath + '*.js')
         .pipe(eslint())
         .pipe(eslint.format());
         // Linter bug - See README
@@ -16,40 +19,40 @@ gulp.task('lint', () => {
 });
 
 gulp.task('concat', ['clean'], () => {
-    return gulp.src('app/**/*.js')
+    return gulp.src(appPath + '*.js')
         .pipe(babel())
         .pipe(concat('app.js'))
-        .pipe(gulp.dest('build'));
+        .pipe(gulp.dest(buildPath));
 });
 
 gulp.task('js', ['clean'], () => {
-    return gulp.src('app/src/**/*.js')
+    return gulp.src(appPath + '*.js')
         .pipe(babel())
-        .pipe(gulp.dest('build'));
+        .pipe(gulp.dest(buildPath));
 });
 
 gulp.task('css', ['clean'], () => {
-    return gulp.src(['app/**/*.css'])
-        .pipe(gulp.dest('build'));
+    return gulp.src([appPath + '*.css'])
+        .pipe(gulp.dest(buildPath));
 });
 
 gulp.task('html', ['clean'], () => {
-    return gulp.src(['app/**/*.html'])
-        .pipe(gulp.dest('build'));
+    return gulp.src([appPath + '*.html'])
+        .pipe(gulp.dest(buildPath));
 });
 
 gulp.task('res', ['clean'], () => {
-    return gulp.src(['app/**/*.png'])
-        .pipe(gulp.dest('build'));
+    return gulp.src([appPath + '*.png'])
+        .pipe(gulp.dest(buildPath));
 });
 
 gulp.task('clean', ()  => {
-    return gulp.src('build', {read: false})
+    return gulp.src(buildPath, {read: false})
         .pipe(clean());
 });
 
 gulp.task('serve', ['build'], () => {
-    return gulp.src('build')
+    return gulp.src(buildPath)
         .pipe(webserver(
             {
                 open: true,
