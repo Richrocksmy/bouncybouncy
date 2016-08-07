@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "A project to make stuff bounce",
   "main": "gulpfile.babel.js",
-  "directories": {
-    "test": "test"
-  },
+  "repository": "",
+  "directories": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
