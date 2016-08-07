@@ -9,7 +9,7 @@ html, body {
 }
 
 canvas {
-    background: url("../res/background.jpg");
+    background: url("../res/background.png");
     display: block;
     margin: 0 auto;
     border: none;

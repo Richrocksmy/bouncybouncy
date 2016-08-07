@@ -14,7 +14,7 @@
 ##Notes
 
 - esLint failOnError is disabled because there appears to be an issue with the linter
-and ES6 classes not being detected as used within the project which causes a build failure.
+and ES6 classes not being detected as used within the project which causes the build to fail.
 
 - I've used Symbols for private variables instead of Weakmaps. Although Weakmaps provide a better
 solution they make the code less readable in places where variables need to be changed a lot. 
@@ -23,10 +23,10 @@ There are proposals for properly implemented private variables in future release
 - The background image used is free for commercial use and no attribution is required. 
 See - https://pixabay.com/en/san-francisco-california-city-210230/ for details.
 
-- The `npm install` step of the build process is just to provide dev dependencies for the linting
-and transpile stages of the gulp build process. The function code was hand rolled by me without libraries
+- The `npm install` step is just to provide dev dependencies for the linting and transpile 
+stages of the gulp build process. The function code was hand rolled by me without libraries
 
-###Impmrovements
+###Improvements
 
 - Use SASS instead of pure CSS. Somewhat unecessary for the limited amount of styling included in
 this project but if the project were to grow this would be advantageous
@@ -37,11 +37,3 @@ some of the common code out to a base class would help keep things DRY.
 
 - Minification and uglification of the codebase would be a necessary step if this were a production
 product. I haven't applied these stages to the gulp build process because it seemed a bit unecessary.
-
-###Known Issues
-
-- Sometimes when running `gulp` for the first time the browser fails to load properly. Not entirely
-sure why this happens, suspect it has something to do with timing on the gulp build steps.
-
-- Similarly, from the initial `gulp` run the browser reloads the page even though it's already been 
-loaded. Feel like these two issues are related.
