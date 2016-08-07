@@ -25,23 +25,11 @@ gulp.task('concat', ['clean'], () => {
         .pipe(gulp.dest(buildPath));
 });
 
-gulp.task('js', ['clean'], () => {
-    return gulp.src(appPath + '*.js')
-        .pipe(babel())
+gulp.task('styles', ['clean'], () => {
+    gulp.src([appPath + '*.css'])
         .pipe(gulp.dest(buildPath));
-});
-
-gulp.task('css', ['clean'], () => {
-    return gulp.src([appPath + '*.css'])
+    gulp.src([appPath + '*.html'])
         .pipe(gulp.dest(buildPath));
-});
-
-gulp.task('html', ['clean'], () => {
-    return gulp.src([appPath + '*.html'])
-        .pipe(gulp.dest(buildPath));
-});
-
-gulp.task('res', ['clean'], () => {
     return gulp.src([appPath + '*.png'])
         .pipe(gulp.dest(buildPath));
 });
@@ -62,11 +50,8 @@ gulp.task('serve', ['build'], () => {
 });
 
 gulp.task('watch', () => {
-    gulp.watch('app/**/*.js', ['js']);
-    gulp.watch(['app/**/*.html'], ['html']);
-    gulp.watch(['app/css/*.css'], ['css']);
+    gulp.watch(appPath + '*.*');
 });
 
-gulp.task('build', ['lint', 'concat', 'html', 'css', 'res']);
-gulp.task('deployDev', ['lint', 'js', 'html', 'css', 'serve', 'watch']);
-gulp.task('default', ['serve']);
+gulp.task('build', ['lint', 'concat', 'styles']);
+gulp.task('default', ['serve', 'watch']);
