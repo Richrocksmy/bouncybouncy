@@ -9,7 +9,7 @@ html, body {
 }
 
 canvas {
-    background: rgba(255, 234, 240, 0.62);
+    background: url("../res/background.jpg");
     display: block;
     margin: 0 auto;
     border: none;
