@@ -1,6 +1,6 @@
 # BouncyBouncy
 
-##A software product to create random trajectory balls that bounce (in pretty colours)
+## A software product to create random trajectory balls that bounce (in pretty colours)
 
 
 ## Usage:
