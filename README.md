@@ -1,17 +1,15 @@
-#BouncyBouncy
+# BouncyBouncy
 
 ##A software product to create random trajectory balls that bounce (in pretty colours)
 
 
-##Usage:
-
-(With npm installed...)
+## Usage:
 
 `npm install`
 
 `gulp`
 
-##Notes
+## Notes
 
 - esLint failOnError is disabled because there appears to be an issue with the linter
 and ES6 classes not being detected as used within the project which causes the build to fail.
@@ -26,7 +24,7 @@ See - https://pixabay.com/en/san-francisco-california-city-210230/ for details.
 - The `npm install` step is just to provide dev dependencies for the linting and transpile 
 stages of the gulp build process. The function code was hand rolled by me without libraries
 
-###Improvements
+### Improvements
 
 - Use SASS instead of pure CSS. Somewhat unecessary for the limited amount of styling included in
 this project but if the project were to grow this would be advantageous
