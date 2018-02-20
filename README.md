@@ -1,7 +1,7 @@
 # BouncyBouncy
 
 ## A software product to create random trajectory balls that bounce (in pretty colours)
-
+(Written by a Java developer as if he were writing Java)
 
 ## Usage:
 
